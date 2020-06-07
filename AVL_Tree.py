@@ -10,27 +10,22 @@ class Node:
 
 class AVL_Baum:
 
-    def __init__(self):
-        self.root=None
+    def __init__(self, key):
+        self.root= Node(key)
 
     def heigh(self):
         pass
 
-    def _add(self, ins):
-        if not self.root:
-            self.root = Node(ins)
-        else:
-            self.root = self.add(ins, self.root)
+    def add(self, p, root, ins):
 
-    def add(self, ins, node):
+       if (ins < root.key):
+            root.left_kind = self.add(ins, root.left_kind)
 
-       if (ins < node.key):
-            node.left_kind = self.add(ins, node.left_kind)
-
-       elif(ins > node.key):
-           node.right_kind = self.add(ins, node.left_kind)
-
-        return node
+       elif(ins > root.key):
+           root.right_kind = self.add(ins, root.left_kind)
+       else:
+           return False
+        return root
 
     def balance(self, key):
         pass
