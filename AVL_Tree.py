@@ -7,25 +7,37 @@ class Node:
         self.parent=None
         self.height=0
 
-    def add(self, ins):
-        if ins == self.key:
-            return False
-        elif(ins < self.key):
-            if self.left_kind == None:
-                self.left_kind = Node(ins)
-            else:
-                self.left_kind.add(ins)
+
+class AVL_Baum:
+
+    def __init__(self):
+        self.root=None
+
+    def heigh(self):
+        pass
+
+    def _add(self, ins):
+        if not self.root:
+            self.root = Node(ins)
         else:
-            if self.right_kind == None:
-                self.right_kind = Node(ins)
-            else:
-                self.right_kind.add(ins)
+            self.root = self.add(ins, self.root)
+
+    def add(self, ins, node):
+
+       if (ins < node.key):
+            node.left_kind = self.add(ins, node.left_kind)
+
+       elif(ins > node.key):
+           node.right_kind = self.add(ins, node.left_kind)
+
+        return node
 
     def balance(self, key):
         pass
 
     def L_Rotation(self):
         pass
+
     def R_Rotation(self):
         pass
 
@@ -35,11 +47,6 @@ class Node:
         print(self.key)
         if self.right_kind:
             self.right_kind.inOrder()
-
-class AVL_Baum:
-
-    def __init__(self):
-        self.root=None
 
 root = Node(6)
 root.add(5)
