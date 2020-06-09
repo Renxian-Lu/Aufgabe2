@@ -13,28 +13,59 @@ class AVL_Baum:
     def __init__(self, key):
         self.root= Node(key)
 
-    def heigh(self):
-        pass
+
+    def heigh(self, node):
+        if(node is None):
+            return
+        else:
+            return (1 + max(node.left_kind, node.right_kind))
 
     def add(self, p, root, ins):
 
-       if (ins < root.key):
-            root.left_kind = self.add(ins, root.left_kind)
-
+       if(root == None):
+           self.root = Node(ins)
+       elif(ins < root.key):
+            root.left_kind = self.add(root, root.left_kind, ins)
        elif(ins > root.key):
-           root.right_kind = self.add(ins, root.left_kind)
+           root.right_kind = self.add(root, root.right_kind, ins)
        else:
            return False
-        return root
+        h = self.heigh(root)
+
+
 
     def balance(self, key):
         pass
 
-    def L_Rotation(self):
-        pass
+    def L_Rotation(self, x):
+        y = x.right_kind
+        x.right_kind = y.left_kind
+        if(y.left_kind != None):
+            y.left_kind.parent = x
+        y.parent = x.parent
+        if(x.parent == None):
+            self.root = y
+        elif(x == x.parent.left_kind):
+            x.parent.left_kind = y
+        elif(x == x.parent.right_kind):
+            x.parent.right_kind = y
+        y.left_kind = x
+        x.parent = y
 
-    def R_Rotation(self):
-        pass
+    def R_Rotation(self, x):
+        y = x.left_kind
+        x.left_kind = y.right_kind
+        if (y.right_kind != None):
+            y.right_kind.parent = x
+        y.parent = x.parent
+        if (x.parent == None):
+            self.root = y
+        elif (x == x.parent.right_kind):
+            x.parent.lright_kind = y
+        elif (x == x.parent.left_kind):
+            x.parent.left_kind = y
+        y.right_kind = x
+        x.parent = y
 
     def inOrder(self):
         if self.left_kind:
@@ -44,9 +75,3 @@ class AVL_Baum:
             self.right_kind.inOrder()
 
 root = Node(6)
-root.add(5)
-root.add(4)
-root.add(7)
-root.add(8)
-root.add(10)
-root.inOrder()
